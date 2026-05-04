@@ -1,0 +1,75 @@
+package mangement;
+import java.util.ArrayList;
+
+// Class for drinks, inherits from Snacks
+public class Drinks extends Snacks {
+    private String name; // drink name
+    private String size; // size of drink
+    private double price; // price based on size
+
+    // Available drinks, sizes, and prices
+    private static final ArrayList<String> drinkNames = new ArrayList<>();
+    private static final ArrayList<String> sizes = new ArrayList<>();
+    private static final ArrayList<Double> sizePrices = new ArrayList<>();
+
+    // Initialize drink options and prices
+    static {
+        drinkNames.add("Shani");
+        drinkNames.add("Seven Up");
+        drinkNames.add("Pepsi");
+
+        sizes.add("Small");
+        sizes.add("Medium");
+        sizes.add("Large");
+
+        sizePrices.add(5.0);  // Small price
+        sizePrices.add(8.0);  // Medium price
+        sizePrices.add(12.0); // Large price
+    }
+
+    // Constructor that create drink with name and size
+    public Drinks(String name, String size) {
+        this.name = name;
+        this.size = size;
+        setPriceBySize(size); // set price automatically
+    }
+
+    // Copy constructor
+    public Drinks(Drinks d) {
+        this.name = d.name;
+        this.size = d.size;
+        this.price = d.price;
+    }
+
+    // Set price based on size
+    private void setPriceBySize(String size) {
+        int index = sizes.indexOf(size);
+        if(index != -1) {
+            this.price = sizePrices.get(index);
+        } else {
+            this.price = sizePrices.get(0); // default to Small
+        }
+    }
+
+    // Getters and setters
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getSize() { return size; }
+    public void setSize(String size) {
+        this.size = size;
+        setPriceBySize(size); // update price when size changes
+    }
+
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
+
+    // Static methods to get available drinks and sizes
+    public static ArrayList<String> getDrinkNames() { return drinkNames; }
+    public static ArrayList<String> getSizes() { return sizes; }
+
+    // Show drink info as string
+    @Override
+    public String toString() {
+        return name + " (" + size + ") = " + price + " SAR";
+    }
