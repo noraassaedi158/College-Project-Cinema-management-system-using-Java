@@ -1,0 +1,70 @@
+package mangement;
+
+public class Seats {
+    // true = reserved  false = available
+    private boolean[][] seats;
+    //Default constructor: 5x5 seats
+    public Seats() {
+        seats = new boolean[5][5];
+    }
+    // Constructor with custom rows and columns
+    public Seats(int rows, int cols) {
+        seats = new boolean[rows][cols];
+    }
+    // Copy constructor
+    public Seats(Seats s) {
+        seats=new boolean[s.seats.length][s.seats[0].length];
+        for(int a=0; a< seats.length; a++) {
+            for(int m=0; m<seats[a].length;m++) {
+                seats[a][m]=s.seats[a][m];
+            }}
+    }
+    // Display seat map
+    public void ardMakaaid() {
+        // Print column numbers
+        System.out.print(" ");
+        for (int col = 0; col < seats[0].length; col++) {
+            System.out.print(col + " ");
+        }
+        System.out.println();
+        // Print rows and seats
+        for (int row = 0; row < seats.length; row++) {
+            System.out.print("Row " + row + ": ");
+            for (int col = 0; col < seats[row].length; col++) {
+
+                // X = reserved, O = available
+                if (seats[row][col]) {
+                    System.out.print(" X ");
+                } else {
+                    System.out.print(" O ");
+                }
+            }
+            System.out.println();
+        }
+    }
+    // Reserve a specific seat
+    public void reserveSeat(int row, int col) {
+        // Check for valid input
+        if (row < 0 || row >= seats.length || col < 0 || col >= seats[0].length) {
+            System.out.println("Invalid seat number!");
+            return;
+        }
+        // Check if seat is already reserved
+        if (seats[row][col]) {
+            System.out.println("You cannot take that!");
+        } else {
+            seats[row][col] = true;
+            System.out.println("Seat has been reserved!");
+        }
+    }
+    //get the first empty seat
+    public int[] getEmptySeats() {
+        for(int n=0; n<seats.length; n++) {
+            for(int h=0; h<seats[n].length; h++) {
+                if(!seats[n][h])
+                    return new int[] {n,h};
+            }
+        }
+        return null; //if no seat is empty it will return nothing
+    }
+}
