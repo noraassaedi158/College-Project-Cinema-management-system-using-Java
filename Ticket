@@ -1,0 +1,74 @@
+package mangement;
+
+public class Ticket {
+	private String movieName;
+    private double price;
+    private Movie movie;
+    private Drinks drink;
+    private Popcorn popcorn;
+
+    //this is the default
+    public Ticket() {
+        movieName = null;
+        price = 0;
+        movie = null;
+        drink = null;
+        popcorn = null;
+    }
+    // Constructor with Movie only, and it will make use the copy contrsuctor in Movie
+    public Ticket(Movie movie) {
+        this.movie = new Movie(movie); // deep copy
+        this.movieName = movie.getTitle(); //use method from movie to store the title
+        calculatePrice();  //and then call the method from down to use the method in movie to get the price
+    }
+    //Constructor that takes  Movie + Drinks + Popcorn and uses deep copying
+    public Ticket(Movie movie, Drinks drink, Popcorn popcorn) {
+        this.movie = new Movie(movie);
+        this.movieName = movie.getTitle();
+        this.drink = new Drinks(drink);
+        this.popcorn = new Popcorn(popcorn);
+        calculatePrice();
+    }
+
+    //Constructor with Movie + Drinks and this will call the constructor from up and makce popcorn null
+    public Ticket(Movie movie, Drinks drink) {
+        this(movie, drink, null); 
+    }
+
+    // Constructor with Movie + Popcorn  and this will also call the constructor from up and makce drinks null
+    public Ticket(Movie movie, Popcorn popcorn) {
+        this(movie, null, popcorn); // constructor chaining
+    }
+
+    //Copy constructor
+    public Ticket(Ticket ticket) {
+        if (ticket.movie != null) this.movie = new Movie(ticket.movie);
+        this.movieName = (this.movie != null) ? this.movie.getTitle() : null;
+        if (ticket.drink != null) this.drink = new Drinks(ticket.drink);
+        if (ticket.popcorn != null) this.popcorn = new Popcorn(ticket.popcorn);
+        calculatePrice();
+    }
+
+    // Calculate price based on items and using method from each method
+    private void calculatePrice() {
+        price = 0;
+        if (movie != null) price += movie.getprice();
+        if (drink != null) price += drink.getPrice();
+        if (popcorn != null) price += popcorn.getPrice();
+    }
+    // Getter for price
+    public double getPrice() {
+        return price;
+    }
+
+    // override toString so we can print the ticket without hash
+    @Override
+    public String toString() {
+        return "Movie: " + movieName +
+                ", Drink: " + (drink != null ? drink : "None") +
+                ", Popcorn: " + (popcorn != null ? popcorn : "None") +
+                ", Price: " + price;
+    }
+}
+
+
