@@ -1,0 +1,34 @@
+package mangement;
+
+public enum Genere {
+	 //genre (popularity, ageRating, price)
+    HORRER(7, 15, 25.0),
+    ROMANTIC(9,13, 20.0),
+    SCIENCE_FICTION(6,12, 15.0),
+    COMEDY(10,13, 30);
+
+    //used in constructors
+    private int popularity;
+    private int ageRating;
+    private double price;
+
+    //not allowed to have public constructors
+    private Genere(int popularity, int ageRating, double price) {
+        this.popularity=popularity;
+        this.ageRating=ageRating;
+        this.price=price;
+    }
+    //get the price
+    public double getPrice() {
+        return price;
+    }
+    //get name its popularity and age
+    public String genreDetails() {
+        return this.name()+ ", popularity " +this.popularity + ", Age Rating " + this.ageRating;
+    }
+    //get the age
+    public int getAgeRating() {
+        return ageRating;
+    }
+
+}
