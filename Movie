@@ -1,0 +1,62 @@
+package mangement;
+
+
+public class Movie {
+	//fields, and aggregating genere and room
+	String title;
+	Genere g;
+	Room room;
+	double price;
+	//default constructor
+	public Movie() {
+		title=null;
+		g=null;
+		room=null;
+	}
+	//i make this constructor so i can use it Cinema to make movies with names, Genre and room
+	public Movie(String title, Genere g, Room room) {
+		this.title=title;
+		this.g=g;
+		this.room=room;
+	}
+	//copy constructor
+	public Movie(Movie m) {
+		title=m.title;
+		g=m.g;
+		room=m.room;
+	}
+	//constructor for storing titles
+	public Movie(String title) {
+		this.title=title;
+	}
+	//setter
+	public void setTitle(String t) {
+		title=t;
+	}
+	//getter
+	public String getTitle() {
+		return title;
+	}
+	//getter
+	public double getprice() {
+		return g.getPrice();
+	}
+	//getter
+	public Room getRoom() {
+        return room;
+    }
+	//helps when im printing movie
+	@Override
+	public String toString() {
+        return title + " (" + g.name() + ", Age: " + g.getAgeRating() + ")";}
+	
+	public void printGenreAndAge() {
+	    if (g == null) {
+	        System.out.println("No genere  is assigned.");
+	        return;
+	    }
+	    System.out.println("Genre: " + g.name() + ", Age Rating: " + g.getAgeRating());
+	}
+
+}
+
