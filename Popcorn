@@ -1,0 +1,76 @@
+package mangement;
+import java.util.ArrayList;
+
+// Class for popcorn, inherits from Snacks
+public class Popcorn extends Snacks {
+    private String flavor; // popcorn flavor
+    private String size; // size
+    private double price; // price based on size
+
+    // Available flavors, sizes, and prices
+    private static final ArrayList<String> flavors = new ArrayList<>();
+    private static final ArrayList<String> sizes = new ArrayList<>();
+    private static final ArrayList<Double> sizePrices = new ArrayList<>();
+
+    // Initialize popcorn options and prices
+    static {
+        flavors.add("Salted");
+        flavors.add("Caramel");
+        flavors.add("butter");
+
+        sizes.add("Small");
+        sizes.add("Medium");
+        sizes.add("Large");
+
+        sizePrices.add(7.0);  // Small
+        sizePrices.add(10.0); // Medium
+        sizePrices.add(15.0); // Large
+    }
+
+    // Constructor that create popcorn with flavor and size
+    public Popcorn(String flavor, String size) {
+        this.flavor = flavor;
+        this.size = size;
+        setPriceBySize(size); // set price automatically
+    }
+
+    // Copy constructor
+    public Popcorn(Popcorn p) {
+        this.flavor = p.flavor;
+        this.size = p.size;
+        this.price = p.price;
+    }
+
+    // Set price based on size
+    private void setPriceBySize(String size) {
+        int index = sizes.indexOf(size);
+        if(index != -1) {
+            this.price = sizePrices.get(index);
+        } else {
+            this.price = sizePrices.get(0); // default Small
+        }
+    }
+
+    // Getters & setters
+    public String getFlavor() { return flavor; }
+    public void setFlavor(String flavor) { this.flavor = flavor; }
+
+    public String getSize() { return size; }
+    public void setSize(String size) {
+        this.size = size;
+        setPriceBySize(size); // update price when size changes
+    }
+
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
+
+    // Static methods to get available flavors and sizes
+    public static ArrayList<String> getFlavors() { return flavors; }
+    public static ArrayList<String> getSizes() { return sizes; }
+
+    // Show popcorn info as string
+    @Override
+    public String toString() {
+        return flavor + " (" + size + ") = " + price + " SAR";
+    }
+}
