@@ -1,0 +1,20 @@
+package mangement;
+
+public class VIPTicket extends Ticket {
+	//this is for overriding everything in ticket when the prices changw
+	 private final double discount = 0.75; 
+
+	    public VIPTicket(Ticket ticket) {
+	        super(ticket); //this calls the copy constructor in mum class
+	    }
+	    //overiding the classes in ticket for price
+	    @Override
+	    public double getPrice() {
+	        return super.getPrice() * discount; // apply VIP discount
+	    }
+//overriding to help with printing so it doesnt print hash
+	    @Override
+	    public String toString() {
+	        return super.toString() + " (VIP Price: " + getPrice() + ")";
+	    }
+}
