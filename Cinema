@@ -1,0 +1,67 @@
+package mangement;
+import java.util.ArrayList;
+public class Cinema {
+	        //fields
+			private String cinemaName="Reel Ciname";
+			//making rooms 
+			private Room[] room =new Room[12];
+			//making 4 Arraylist, one for each Genere
+			ArrayList<Movie> horror=new ArrayList<>();	
+			ArrayList<Movie>romantic=new ArrayList<>();
+			ArrayList<Movie>sciFi=new ArrayList<>();
+			ArrayList<Movie>comedy=new ArrayList<>();
+			//Aggregation for rooms, I'll make 12 rooms for each movie
+			public Cinema() {
+				for (int i=0; i<12; i++) {
+					 room[i]= new Room(i+1);
+				}moviethings(); }
+			
+			//in this method we will fill each array list with default movies we have chosen, using the class Movies we will   
+			//will give them a name, and the using Genere class we will assign it a genere so that we can get price and age rating
+			//then we will put each movie in a room of its own
+				public void moviethings() {
+					horror.add(new Movie("It",Genere.HORRER, room[0]));
+					horror.add(new Movie("Annabelle", Genere.HORRER, room[1]));
+			        horror.add(new Movie("M3GAN", Genere.HORRER, room[2]));
+
+			        romantic.add(new Movie("La La Land", Genere.ROMANTIC, room[3]));
+			        romantic.add(new Movie("Beauty and the Beast", Genere.ROMANTIC, room[4]));
+			        romantic.add(new Movie("Cinderella", Genere.ROMANTIC, room[5]));
+
+			        sciFi.add(new Movie("Frankenstein", Genere.SCIENCE_FICTION, room[6]));
+			        sciFi.add(new Movie("Avatar", Genere.SCIENCE_FICTION, room[7]));
+			        sciFi.add(new Movie("WALL-E", Genere.SCIENCE_FICTION, room[8]));
+
+			        comedy.add(new Movie("Barbie", Genere.COMEDY, room[9]));
+			        comedy.add(new Movie("Cruella", Genere.COMEDY, room[10]));
+			        comedy.add(new Movie("Home Alone", Genere.COMEDY, room[11]));
+				}
+						
+			//i will use this to return the lists when i do search by genere	  
+			public ArrayList<Movie> ViewHorrerMovies(){
+				  return horror;
+				}
+				
+
+			public 	ArrayList<Movie> ViewRomanticMovies(){
+				return romantic;
+			}
+			public ArrayList<Movie> ViewSciFiMovie(){
+				return sciFi;
+			}
+			
+			public ArrayList<Movie> ViewComedyMovie(){
+				return comedy;
+			}
+			//i will use theses when i want to use view all movies in main
+			public ArrayList<Movie> ViewAllMovies() {
+			    ArrayList<Movie> allMovies = new ArrayList<>();
+			    allMovies.addAll(horror);
+			    allMovies.addAll(romantic);
+			    allMovies.addAll(sciFi);
+			    allMovies.addAll(comedy);
+			    return allMovies;
+			} }
+	
+
+
