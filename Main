@@ -1,0 +1,372 @@
+package mangement;
+import java.util.Scanner;
+import java.io.PrintWriter;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+public class Main {
+	static Cinema cinema = new Cinema();
+	public static void main(String[] args) {
+		//make one scanner 
+		 Seats seats = new Seats(); //for the parameter of Seats
+		Scanner keyboard=new Scanner(System.in);
+		System.out.println("Welcome to Reel Cinema :D ");
+		user(0, keyboard);
+		//will keep repeating until we choose exit
+		//print out our menu
+		while(true) {
+		System.out.println("Reel Cinema");
+		System.out.println("-----------");
+		System.out.println("1. Add new Movie");
+		System.out.println("2. View All movies");
+		System.out.println("3. Search movie");   //by genre, title, age rating(from genere class), using array search and views them, 
+		System.out.println("4. update movie info");
+		System.out.println("5. Sell ticket (With snacks/drinks");
+		System.out.println("6. Just snack");
+		System.out.println("7. Reserve seat only");
+		System.out.println("8. Empty Seats in movie of your choosing");
+		System.out.println("9. Exit");
+		System.out.print("type a number:");
+		int num=0;
+		num=keyboard.nextInt();
+		System.out.println();
+		switch(num) {
+		//instead of making a scanner inside all of these methods, i just pass one scanner
+        case 1: addNewMovie(keyboard); break;
+        case 2: viewAllMovies(); break;
+        case 3: searchMovie(keyboard); break;
+        case 4: updateMovie(keyboard); break;
+        case 5: sellTicket(keyboard); break;
+        case 6: Snacks(keyboard); break;
+        case 7: reserveSeat(keyboard, seats); break;
+        case 8: emptySeats(seats); break;
+        case 9: exit(keyboard); break;
+        default: System.out.println("Error");
+        System.exit(0); //if a number was written that is not in this list the program will fail
+    }
+		}
+		 }
+
+	//username checker, uses recursion, our username is "DrUhood"
+	public static void user(int a, Scanner Keyboard) {
+		if (a>4) { //5 is minumum
+			System.out.println("Too many attempts!");
+			System.exit(0); //stop program
+		} //3 tries
+		System.out.println("Enter username");
+		String username=Keyboard.nextLine();
+		if (username.equals("DrUhood")) {
+			pass(0, Keyboard); // recursion whoooooo
+			}
+		else {
+			System.out.println("Username is incorrect, please try again");
+				user(a+1,Keyboard);
+			}
+			} //end of method
+	//password checker uses recursion, our password is our Cinema Name "Reel Cinema"
+	 public static void pass(int b, Scanner Keyboard) {
+		 if(b>4) { //5 is min
+			 System.out.println("Too many attempts!");
+			 System.exit(0); //stop the program
+		 }  //3 tries
+		
+		 System.out.println("Enter password");
+		 String password=Keyboard.nextLine();
+		 if (password.equals("Reel Cinema")) {
+				System.out.println("Welcome to Reel cinema mangement Dr Uhood!");
+				}
+			else {
+				System.out.println("password is incorrect, please try again");
+					pass(b+1, Keyboard);
+				}
+			} //end of this method
+		//the instructor types in 1 
+	  public static void addNewMovie(Scanner keyboard) {
+		  keyboard.nextLine();
+		  // we need to make a Movie object, which needs the title, the genere and the room
+		  String movietitle;
+			    System.out.println("Enter the movie title: ");
+			    movietitle = keyboard.nextLine(); //get the title from user and store it here
+			    System.out.println("Now, select genre: (type in a number)"); //1-4
+			    //print out our default Movies
+			    System.out.println("1. HORRER");
+			    System.out.println("2. ROMANTIC");
+			    System.out.println("3. SCIENCE_FICTION");
+			    System.out.println("4. COMEDY");
+			    //the instructors choice will be saved in int choice, so that we can use it
+			    int c = keyboard.nextInt();
+			    keyboard.nextLine(); // consume newline
+			    Genere genere;
+			    switch(c) {
+			    case 1: genere = Genere.HORRER; break; //if 1 is typed then we assign the movie to Horrer
+			   case 2: genere = Genere.ROMANTIC; break; //if 2 is typed then we assign the movie to romantic
+			    case 3: genere = Genere.SCIENCE_FICTION; break; //if 3 is typed then we assign the movie to Science fiction
+			    case 4: genere = Genere.COMEDY; break; // if 4 is typed then we assign the movie to comedy
+			    default: 
+			     System.out.println("that is not a choice, will go back to default genere which is comedy ");
+			    genere = Genere.COMEDY; //genere is comedy because we wanted that to be our default 
+			    }
+			    System.out.print("Enter room number (1-12): "); //because we only have 12 rooms
+			    int roomnum = keyboard.nextInt(); //save instructors choice here
+			    System.out.println(); // so that we can skip the line
+			    Room room = new Room(roomnum); //we need to make a room object so we can store the room inside, because it needs its seats
+			    Movie newMovie = new Movie(movietitle, genere, room); //put the answers from the instructor here
+			    switch(genere) {
+			     case HORRER: cinema.ViewHorrerMovies().add(newMovie); break;
+			     case ROMANTIC: cinema.ViewRomanticMovies().add(newMovie); break;
+			      case SCIENCE_FICTION: cinema.ViewSciFiMovie().add(newMovie); break;
+			     case COMEDY: cinema.ViewComedyMovie().add(newMovie); break;
+}
+}//end of this method
+	  public static void viewAllMovies() {
+		  
+System.out.println("All of the movies in our  Reel cinema:");
+ for (int i = 0; i < cinema.ViewAllMovies().size(); i++) { //we used our method that returns ArrayList, and used size so it can print all the movies inside
+	System.out.println(cinema.ViewAllMovies().get(i)); //print all the movies 
+
+		    }
+		}
+	  public static void searchMovie(Scanner s) {
+		  
+		   	//we have three searching, by title, genere or by age
+		ArrayList<Movie> allMovies = cinema.ViewAllMovies(); //and then make an arraylist to store all of our movies, so we can search later 
+			    // :D
+	 System.out.println("you want to search by:");
+		 System.out.println("1. title");
+		 System.out.println("2. genere");
+		System.out.println("3. age");
+			    int choice = s.nextInt();
+			    s.nextLine(); // eat the leftover newline
+			    //store the number here 
+			    System.out.println(); // make a new line 
+			    ArrayList<Movie> results = new ArrayList<>();
+			    switch (choice) {
+			        //searching by title
+			    case 1:
+			    System.out.println("enter your title  ");
+			    String title = s.nextLine(); //we store title here
+			    for (int i = 0; i < allMovies.size(); i++) { //it will look  for all 
+			    Movie m = allMovies.get(i); //we will store array list in movie to look for movie title 
+			    if (m.getTitle().equalsIgnoreCase(title)) { //ignore case will ignore capital letters and spaces and look for it 
+			     results.add(m);}} // if it finds it, it will store it in resulats which will help us print it later
+	             break;
+			        //searching by the Genere
+			    case 2:
+			    System.out.println("type a number for choosing a genere:");
+			    //print our default movies
+			    System.out.println("1. HORRER");
+			    System.out.println("2. ROMANTIC");
+			    System.out.println("3. SCIENCE_FICTION");
+			    System.out.println("4. COMEDY");
+			   int gChoice = s.nextInt(); //save instructor choice here
+			   System.out.println();// to skip a line
+			   Genere genere; //make a genere 
+			   switch (gChoice) {
+			    case 1: genere = Genere.HORRER; break;
+			    case 2: genere = Genere.ROMANTIC; break;
+			    case 3: genere = Genere.SCIENCE_FICTION; break;
+			    case 4: genere = Genere.COMEDY; break;
+			    default:
+			    System.out.println("we dont have that Genere ");
+			     return;}
+			            
+			   for (int i = 0; i < allMovies.size(); i++) { //goes through all the movies
+			   Movie m = allMovies.get(i);  //puts the arraylist in movie 
+			   if (m.g == genere) {  //if a movie belongs to the genre save it inside results
+			    results.add(m); 
+			   }
+			   }
+			   break;
+			        // search with age 
+			  case 3:
+			   System.out.print("write age to search ");
+			   int age = s.nextInt(); //save the age in here 
+			   System.out.println(); //make it go to the next line
+			   for (int i = 0; i < allMovies.size(); i++) { //go through all the movie
+			    Movie m = allMovies.get(i); // store it in  movie 
+			    if (m.g.getAgeRating() == age) { //if the age rating is there, store it in results
+			   results.add(m); 
+			   }
+			  }
+			  break;
+			  default:
+			  System.out.println("Choice is not on the list");
+			  return;
+			    }
+			    //printing the m
+			    if (results.isEmpty()) {  //this means that they have accidently chosen invalid
+			    System.out.println("sorry");
+			    } else {
+			    System.out.println("Searching for your result ");
+			    //now it will go through all of resualt we have saved earlier and print it and print it 
+			    for (int i = 0; i < results.size(); i++) {
+			        Movie found = results.get(i);  // grab the movie from the results and prints them
+			        System.out.println((i + 1) + ",  " + found.getTitle());
+			        found.printGenreAndAge();      // print genre + age rating
+			    }
+			     }
+			    }
+	  public static void updateMovie(Scanner s) {
+		  s.nextLine();
+			    ArrayList<Movie> all = cinema.ViewAllMovies(); //will get all the movies, using View all method from Cinema class
+			    //show all movies so the instructor can choose which one she wants to update
+			    System.out.println("Movies available:");
+			    //here we used loop to print but we can also do System.ou.println because arraylist are not like arrays
+			    for (int i = 0; i < all.size(); i++) {
+			        System.out.println((i + 1) + ". " + all.get(i).getTitle()); //here it will print number and then the title from class Cinema
+			    }
+			    //ask instructor to choose by number what they want to update 
+			    System.out.print("Choose a movie to update (number): ");
+			    int choice = s.nextInt(); // store choice here
+			    s.nextLine(); //consume newline because it was nextInt
+			    if (choice < 1 || choice > all.size()) {   //if the number isnt in the list then its an error
+			     System.out.println("incorrect choice, that number isnt on the list");
+			    return;
+			    }
+			    Movie m = all.get(choice - 1); //because the number we need is going to be smaller by one, because arraylist start with zero and not one
+			    // get new title
+			    System.out.print("Enter the new titleof the movie you have chosen : "); //ask instructor to put her new movie over her
+			    String newTitle = s.nextLine(); //then itll be stored here
+			    m.setTitle(newTitle); //we set the title using set Title
+			    //show genres
+			    System.out.println("Choose the new Genre for your new movie (Type from 1 to number 4):");
+			    System.out.println("1. HORROR");
+			    System.out.println("2. ROMANTIC");
+			    System.out.println("3. SCIENCE_FICTION");
+			    System.out.println("4. COMEDY");
+			    int gChoice = s.nextInt(); //movie genre choice will be saved here
+			    s.nextLine(); //consume newline, because nextInt is before
+			    //Store the new Genere over here
+			    switch (gChoice) {
+			    case 1: m.g = Genere.HORRER; break;
+			    case 2: m.g = Genere.ROMANTIC; break;
+			    case 3: m.g = Genere.SCIENCE_FICTION; break;
+			    case 4: m.g = Genere.COMEDY; break;
+			    default:
+			    System.out.println("Incorrect input. Genere is not updated and will stay as its default ehich Comedy"); //in my genre class i have comedy as the default 
+			    }
+			    System.out.println("Movie has been updated!"); //so instructor can know, its better than being silent
+			}
+
+		
+
+
+	  public static void sellTicket(Scanner s) {
+		  s.nextLine();
+	        // Step 1: Ask ticket type
+	        System.out.println("What do you have:");
+	        System.out.println("1. Regular Ticket");
+	        System.out.println("2. VIP Ticket");
+	        int ticketType = s.nextInt();
+	        s.nextLine(); // consume newline
+	        // Step 2: Ask for drink
+	        System.out.print("Choose a drink (Coca Cola/Dr Pepper/Sprite): ");
+	        String dName = s.nextLine();
+	        System.out.print("Choose drink size (Small/Medium/Large): ");
+	        String dSize = s.nextLine();
+	        Drinks drink = new Drinks(dName, dSize);
+	        // Step 3: Ask for popcorn
+	        System.out.print("Choose popcorn flavor (Salted/Caramel/Cheese): ");
+	        String pFlavor = s.nextLine();
+	        System.out.print("Choose popcorn size (Small/Medium/Large): ");
+	        String pSize = s.nextLine();
+	        Popcorn popcorn = new Popcorn(pFlavor, pSize);
+	        // Step 4: Movie placeholder
+	        Movie movie = new Movie("Selected Movie"); // ثابت
+	        // Step 5: Create ticket
+	        Ticket ticket;
+	        boolean isVIP = ticketType == 2;
+	        if(!isVIP) {
+	            ticket = new Ticket(movie, drink, popcorn);
+	        } else {
+	            ticket = new VIPTicket(new Ticket(movie, drink, popcorn));
+	        }
+	        // Step 6: Display ticket & price
+	        System.out.println("\nYour Ticket with Snacks:");
+	        System.out.println(ticket);
+	        double moviePrice = 25.0; // السعر ثابت للفيلم
+	        double drinksPrice = drink.getPrice();
+	        double popcornPrice = popcorn.getPrice();
+	        if(isVIP) {
+	            double totalBeforeDiscount = moviePrice + drinksPrice + popcornPrice;
+	            double vipPrice = totalBeforeDiscount * 0.75;
+	            System.out.println("\nPrice Breakdown:");
+	            System.out.println("Movie Price: 25 SAR ");
+	            System.out.println("Drinks Price: " + drinksPrice + " SAR");
+	            System.out.println("Popcorn Price: " + popcornPrice + " SAR");
+	            System.out.println("Total before VIP discount: " + totalBeforeDiscount + " SAR");
+	            System.out.println("VIP Price after 25% discount: " + vipPrice + " SAR");
+	        } else {
+	            double total = moviePrice + drinksPrice + popcornPrice;
+	            System.out.println("\nPrice Breakdown:");
+	            System.out.println("Movie Price: 25 SAR (fixed)");
+	            System.out.println("Drinks Price: " + drinksPrice + " SAR");
+	            System.out.println("Popcorn Price: " + popcornPrice + " SAR");
+	            System.out.println("Total Price: " + total + " SAR");
+	        }
+
+	    }
+	    public static void Snacks(Scanner s) {
+	    	 s.nextLine();
+	        System.out.print("Choose a drink (Coca Cola/Dr Pepper/Sprite): ");
+	        String dName = s.nextLine();
+	        System.out.print("Choose drink size (Small/Medium/Large): ");
+	        String dSize = s.nextLine();
+	        Drinks drink = new Drinks(dName, dSize);
+	        System.out.print("Choose popcorn flavor (Salted/Caramel/Cheese): ");
+	        String pFlavor = s.nextLine();
+	        System.out.print("Choose popcorn size (Small/Medium/Large): ");
+	        String pSize = s.nextLine();
+	        Popcorn popcorn = new Popcorn(pFlavor, pSize);
+	        Snacks snack = new Snacks(drink, popcorn);
+	        System.out.println("\nYour Snacks:");
+	        System.out.println(snack);
+	        System.out.println("Total Snacks Price: " + snack.getTotalPrice() + " \uFDFC");
+	    }
+	    public static void reserveSeat(Scanner s, Seats seats) {
+	        // Show current seat map
+	        System.out.println("Current seat map (O = available, X = taken):");
+	        seats.ardMakaaid();
+	        // Ask for seat
+	        System.out.print("Enter row number: ");
+	        int row = s.nextInt();
+	        System.out.print("Enter column number: ");
+	        int col = s.nextInt();
+	        // Reserve
+	        seats.reserveSeat(row, col);
+	        // Show updated map
+	        System.out.println("Updated seat map:");
+	        seats.ardMakaaid();
+	    }
+
+	    public static void emptySeats(Seats seats) {
+	        System.out.println("Seat map (O = available, X = taken):");
+	        seats.ardMakaaid();
+	        System.out.println("Seats without 'X' are empty.");
+	    }
+
+
+	  public static void exit(Scanner s) {
+		  s.nextLine();
+       System.out.println("Thanks for using our Reel Cinema management!!!! :D"); 
+       System.out.println("We hope you have enjoyed it <33");
+       
+	  System.out.print("DrUhood, kindly write your Feedback on our project ");
+	String feedback = s.nextLine(); // get feedback from instructor
+      System.out.println("Thank you so much :)");
+      //excpetional handling with try catch in print writer 
+	 try {
+	PrintWriter writer = new PrintWriter("Feedback.txt"); // create a new file called Feedback
+	writer.println(feedback); // write instructor feedback into file
+	  writer.close(); // closing the file
+	  System.out.println("Your feedback has been saved. Thank you DrUhood!");}
+      catch (FileNotFoundException e) { //when there is a problem 
+	System.out.println("sorry could not save your feedback :( ");
+	 e.printStackTrace();}
+			    System.out.println("closing our program");
+			    System.out.println("Goodbye!  ");
+System.exit(0); // exit program
+			}
+
+	  }
+	 
+
