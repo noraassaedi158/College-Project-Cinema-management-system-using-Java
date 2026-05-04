@@ -1,0 +1,22 @@
+package mangement;
+
+public class Room {
+	//very small class, and will be useful when i put each movie in a room
+	//fields
+    private int roomNumber;
+//constructor that i used in Cinema to give each room a number
+    public Room(int roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+//this is the constructor copy that takes the whole object so it can store3
+    public Room(Room room) {
+        this.roomNumber = room.roomNumber;
+    }
+   //get the room number
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+}
+
+
+
