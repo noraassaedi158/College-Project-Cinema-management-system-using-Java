@@ -1,0 +1,48 @@
+package mangement;
+//Class for combining drink and popcorn as a snack
+public class Snacks {
+ private Drinks drink;
+ private Popcorn popcorn;
+
+ // Default constructor (empty snack)
+ public Snacks() {
+     this.drink = null;
+     this.popcorn = null;
+ }
+
+ // Constructor with drink and popcorn
+ public Snacks(Drinks drink, Popcorn popcorn) {
+     this.drink = drink;
+     this.popcorn = popcorn;
+ }
+
+ // Copy constructor (copy another snack)
+ public Snacks(Snacks snack) {
+     if (snack.drink != null)
+         this.drink = new Drinks(snack.drink);
+     if (snack.popcorn != null)
+         this.popcorn = new Popcorn(snack.popcorn);
+ }
+
+ // Getters and setters
+ public Drinks getDrink() { return drink; }
+ public void setDrink(Drinks drink) { this.drink = drink; }
+
+ public Popcorn getPopcorn() { return popcorn; }
+ public void setPopcorn(Popcorn popcorn) { this.popcorn = popcorn; }
+
+ // Calculate total price of snack
+ public double getTotalPrice() {
+     double total = 0;
+     if (drink != null) total += drink.getPrice();
+     if (popcorn != null) total += popcorn.getPrice();
+     return total;
+ }
+
+ // Show snack info as a string
+ @Override
+ public String toString() {
+     return "Drink: " + (drink != null ? drink : "None") +
+             ", Popcorn: " + (popcorn != null ? popcorn : "None");
+ }
+}
